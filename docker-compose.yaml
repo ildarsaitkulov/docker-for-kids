@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./dockerFiles/nginx/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - myapp-network
+    depends_on:
+      - php-fpm
+    volumes:
+      - ./:/var/www/hello.dev/
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./dockerFiles/php-fpm/Dockerfile
+    networks:
+      - myapp-network
+    volumes:
+      - ./:/var/www/hello.dev/
+  postgres:
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_PASSWORD: mysecretpass
+    networks:
+      - myapp-network
+networks:
+  myapp-network:
+    driver: bridge
