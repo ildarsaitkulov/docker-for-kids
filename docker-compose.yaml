@@ -2,17 +2,17 @@ version: '3'
 
 services:
   nginx:
-    container_name: nginx-test
-    build:
-      context: .
-      dockerfile: ./dockerFiles/nginx/Dockerfile
-    ports:
+    container_name: nginx-test # имя контейнера
+    build: # билд образа из dockerFile
+      context: . # путь в конексте которого будет сбилжен образ
+      dockerfile: ./dockerFiles/nginx/Dockerfile # путь до dockerFile из которого будет собран образ
+    ports: # проброс портов
       - "80:80"
-    networks:
+    networks: # имя сети к котором будет подключен контейнер
       - test-network
-    depends_on:
+    depends_on: # запуск контейнера зависить от
       - php-fpm
-    volumes:
+    volumes: #  монитрование директорий, директория-на-хост-машине:директория-в-докере
       - ./:/var/www/hello.dev/
   php-fpm:
     container_name: php-fpm-test
@@ -25,11 +25,11 @@ services:
       - ./:/var/www/hello.dev/
   postgres:
     container_name: postgres-test
-    image: postgres:14.1-alpine
+    image: postgres:14.1-alpine # тэг образа из https://hub.docker.com/
     environment:
-      POSTGRES_PASSWORD: mysecretpass
+      POSTGRES_PASSWORD: mysecretpass # переменные окружения которые использует контейнер
     networks:
       - test-network
-networks:
+networks: # явно объявленные сети
   test-network:
     driver: bridge
