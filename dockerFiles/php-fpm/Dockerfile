@@ -5,4 +5,4 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && install-php-extensions pdo_pgsql
 WORKDIR /var/www/hello.dev/
 
-CMD ["php -S 127.0.0.1:8080"]
+CMD ["php-fpm"]
