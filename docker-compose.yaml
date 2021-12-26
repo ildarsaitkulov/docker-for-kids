@@ -2,31 +2,34 @@ version: '3'
 
 services:
   nginx:
+    container_name: nginx-test
     build:
       context: .
       dockerfile: ./dockerFiles/nginx/Dockerfile
     ports:
       - "80:80"
     networks:
-      - myapp-network
+      - test-network
     depends_on:
       - php-fpm
     volumes:
       - ./:/var/www/hello.dev/
   php-fpm:
+    container_name: php-fpm-test
     build:
       context: .
       dockerfile: ./dockerFiles/php-fpm/Dockerfile
     networks:
-      - myapp-network
+      - test-network
     volumes:
       - ./:/var/www/hello.dev/
   postgres:
+    container_name: postgres-test
     image: postgres:14.1-alpine
     environment:
       POSTGRES_PASSWORD: mysecretpass
     networks:
-      - myapp-network
+      - test-network
 networks:
-  myapp-network:
+  test-network:
     driver: bridge
