@@ -2,7 +2,7 @@
 
 This is a simple web application based on php-fpm + nginx + postgres
 
-##Requirements
+## Requirements
 - [docker](https://docs.docker.com/engine/install/)
 - [docker-compose](https://docs.docker.com/compose/install/)
 
